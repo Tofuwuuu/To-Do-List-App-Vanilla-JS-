@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A simple vanilla JavaScript To‑Do List app with filters and localStorage."
+    />
+    <title>To‑Do List</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <p class="brand-kicker">Vanilla JS</p>
+          <h1 class="brand-title">To‑Do List</h1>
+          <p class="brand-subtitle">Add, edit, complete, filter, and persist.</p>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <section class="card app" aria-label="To-do app">
+        <form id="addForm" class="add-row" autocomplete="off">
+          <label class="sr-only" for="newTodo">Add a task</label>
+          <input
+            id="newTodo"
+            name="newTodo"
+            type="text"
+            inputmode="text"
+            placeholder="What do you need to do?"
+            maxlength="160"
+            required
+          />
+          <button class="button button-primary" type="submit">Add</button>
+        </form>
+
+        <div class="toolbar" aria-label="Controls">
+          <div class="filters" role="group" aria-label="Filter tasks">
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">
+              All
+            </button>
+            <button type="button" class="chip" data-filter="active" aria-pressed="false">
+              Active
+            </button>
+            <button
+              type="button"
+              class="chip"
+              data-filter="completed"
+              aria-pressed="false"
+            >
+              Completed
+            </button>
+          </div>
+
+          <div class="stats" aria-label="Task counts">
+            <span class="stat">
+              <span class="stat-label">Remaining</span>
+              <strong id="remainingCount">0</strong>
+            </span>
+            <span class="stat">
+              <span class="stat-label">Total</span>
+              <strong id="totalCount">0</strong>
+            </span>
+          </div>
+
+          <button id="clearCompleted" class="button button-ghost" type="button" disabled>
+            Clear completed
+          </button>
+        </div>
+
+        <ul id="todoList" class="list" aria-label="Tasks"></ul>
+
+        <p id="emptyState" class="empty muted" hidden>
+          No tasks yet. Add one above to get started.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="muted">Built with HTML, CSS, and JavaScript — no frameworks.</p>
+        <a class="muted" href="#main">Back to top</a>
+      </div>
+    </footer>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
