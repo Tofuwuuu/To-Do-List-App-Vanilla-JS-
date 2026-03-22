@@ -1,0 +1,8 @@
+# Render Static Site — publish from repo root (where index.html lives)
+# https://render.com/docs/static-sites
+services:
+  - type: web
+    name: to-do-list-app
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
