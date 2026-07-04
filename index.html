@@ -43,17 +43,19 @@
               maxlength="160"
               required
             />
-            <select id="newPriority" aria-label="Priority">
-              <option value="high">High</option>
-              <option value="medium" selected>Medium</option>
-              <option value="low">Low</option>
-            </select>
-            <input
-              id="newDueDate"
-              type="date"
-              aria-label="Due date (optional)"
-            />
-            <button class="button button-primary" type="submit">Add</button>
+            <div class="add-meta">
+              <select id="newPriority" aria-label="Priority">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+              <input
+                id="newDueDate"
+                type="date"
+                aria-label="Due date (optional)"
+              />
+              <button class="button button-primary" type="submit">Add</button>
+            </div>
           </form>
 
           <label class="search-row">
@@ -76,36 +78,33 @@
             aria-label="Task completion progress"
           >
             <div id="progressFill" class="progress-fill"></div>
-            <span id="progressLabel" class="progress-label">0 of 0 completed</span>
+            <span id="progressLabel" class="progress-label">0%</span>
           </div>
 
           <div class="toolbar" aria-label="Controls">
-            <div class="filters" role="group" aria-label="Filter tasks">
-              <button type="button" class="chip" data-filter="all" aria-pressed="true">
-                All
-              </button>
-              <button type="button" class="chip" data-filter="active" aria-pressed="false">
-                Active
-              </button>
-              <button
-                type="button"
-                class="chip"
-                data-filter="completed"
-                aria-pressed="false"
-              >
-                Completed
-              </button>
-            </div>
+            <div class="toolbar-main">
+              <div class="filters" role="group" aria-label="Filter tasks">
+                <button type="button" class="chip" data-filter="all" aria-pressed="true">
+                  All
+                </button>
+                <button type="button" class="chip" data-filter="active" aria-pressed="false">
+                  Active
+                </button>
+                <button
+                  type="button"
+                  class="chip"
+                  data-filter="completed"
+                  aria-pressed="false"
+                >
+                  Completed
+                </button>
+              </div>
 
-            <div class="stats" aria-label="Task counts">
-              <span class="stat">
-                <span class="stat-label">Remaining</span>
-                <strong id="remainingCount">0</strong>
-              </span>
-              <span class="stat">
-                <span class="stat-label">Total</span>
-                <strong id="totalCount">0</strong>
-              </span>
+              <div class="stats-inline" aria-label="Task counts">
+                <span>Remaining <strong id="remainingCount">0</strong></span>
+                <span class="stat-sep" aria-hidden="true">·</span>
+                <span>Total <strong id="totalCount">0</strong></span>
+              </div>
             </div>
 
             <button id="clearCompleted" class="button button-ghost" type="button" disabled>
@@ -115,8 +114,25 @@
 
           <div class="list-scroll" id="listScroll">
             <ul id="todoList" class="list" aria-label="Tasks"></ul>
-            <p id="emptyState" class="empty muted" hidden>
-              No tasks yet. Add one above to get started.
+            <p id="emptyState" class="empty" hidden>
+              <svg
+                class="empty-icon"
+                aria-hidden="true"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="8" y="2" width="8" height="4" rx="1" />
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                <line x1="9" x2="15" y1="12" y2="12" />
+                <line x1="9" x2="15" y1="16" y2="16" />
+              </svg>
+              <span id="emptyMessage">No tasks yet. Add one above to get started.</span>
             </p>
           </div>
         </section>

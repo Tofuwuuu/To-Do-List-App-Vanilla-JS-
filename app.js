@@ -154,6 +154,7 @@ const els = {
   total: /** @type {HTMLElement} */ (document.getElementById("totalCount")),
   clearCompleted: /** @type {HTMLButtonElement} */ (document.getElementById("clearCompleted")),
   emptyState: /** @type {HTMLElement} */ (document.getElementById("emptyState")),
+  emptyMessage: /** @type {HTMLElement} */ (document.getElementById("emptyMessage")),
   progressBar: /** @type {HTMLElement} */ (document.getElementById("progressBar")),
   progressFill: /** @type {HTMLElement} */ (document.getElementById("progressFill")),
   progressLabel: /** @type {HTMLElement} */ (document.getElementById("progressLabel")),
@@ -362,7 +363,7 @@ function renderItem(t) {
   const reorderEnabled = canReorder();
   const isPendingDelete = pendingDeleteId === t.id;
 
-  let itemClasses = "item";
+  let itemClasses = `item item-priority-${t.priority}`;
   if (lastAddedId === t.id) itemClasses += " item-enter";
   if (isPendingDelete) itemClasses += " item-exit";
   if (justCompletedId === t.id) itemClasses += " item-complete";
@@ -381,15 +382,20 @@ function renderItem(t) {
   let mainCell;
   if (isEditing) {
     mainCell = `
-      <input class="edit-input" data-edit="${escapeHtml(t.id)}" value="${escapeHtml(editingDraft)}" maxlength="160" />
-      <input class="edit-date" type="date" data-due-edit="${escapeHtml(t.id)}" value="${escapeHtml(toDateInputValue(editingDueDate))}" aria-label="Due date" />
-    `;
+      <div class="content-stack">
+        <input class="edit-input" data-edit="${escapeHtml(t.id)}" value="${escapeHtml(editingDraft)}" maxlength="160" />
+        <input class="edit-date" type="date" data-due-edit="${escapeHtml(t.id)}" value="${escapeHtml(toDateInputValue(editingDueDate))}" aria-label="Due date" />
+      </div>`;
   } else {
-    const dueBadge =
+    const dueLine =
       t.dueDate !== null
-        ? `<span class="due-badge${isOverdue(t.dueDate, t.completed) ? " overdue" : ""}">${escapeHtml(formatDueDate(t.dueDate))}</span>`
+        ? `<span class="due-line${isOverdue(t.dueDate, t.completed) ? " overdue" : ""}">Due ${escapeHtml(formatDueDate(t.dueDate))}</span>`
         : "";
-    mainCell = `<span class="${titleClass}">${escapeHtml(t.text)}</span>${dueBadge}`;
+    mainCell = `
+      <div class="content-stack">
+        <span class="${titleClass}">${escapeHtml(t.text)}</span>
+        ${dueLine}
+      </div>`;
   }
 
   const editIcon = isEditing ? ICONS.check : ICONS.pencil;
@@ -424,13 +430,23 @@ function render(after) {
   els.progressBar.setAttribute("aria-valuenow", String(pct));
   els.progressFill.style.width = `${pct}%`;
   els.progressLabel.textContent =
-    total === 0 ? "No tasks yet" : `${completed} of ${total} completed`;
+    total === 0 ? "0%" : `${pct}% · ${completed} of ${total}`;
+  els.progressBar.setAttribute(
+    "aria-label",
+    total === 0
+      ? "Task completion progress: 0%"
+      : `Task completion progress: ${pct}%, ${completed} of ${total} completed`,
+  );
 
   const hasCompleted = todos.some((t) => t.completed);
   els.clearCompleted.disabled = !hasCompleted;
 
   const visible = filteredTodos();
   els.emptyState.hidden = visible.length !== 0;
+  els.emptyMessage.textContent =
+    todos.length === 0
+      ? "No tasks yet. Add one above to get started."
+      : "No tasks match your search or filter.";
 
   if (draggingId === null) {
     els.list.innerHTML = visible.map(renderItem).join("");
