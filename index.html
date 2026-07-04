@@ -17,82 +17,118 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body class="dark-app">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-shell">
+      <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <div class="container header-inner">
-        <div class="brand">
-          <p class="brand-kicker">Vanilla JS</p>
-          <h1 class="brand-title">To‑Do List</h1>
-          <p class="brand-subtitle">Add, edit, complete, filter, and persist.</p>
+      <header class="site-header">
+        <div class="container header-inner">
+          <div class="brand">
+            <p class="brand-kicker">Vanilla JS</p>
+            <h1 class="brand-title">To‑Do List</h1>
+            <p class="brand-subtitle">Add, edit, complete, filter, and persist.</p>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <main id="main" class="container">
-      <section class="card app" aria-label="To-do app">
-        <form id="addForm" class="add-row" autocomplete="off">
-          <label class="sr-only" for="newTodo">Add a task</label>
-          <input
-            id="newTodo"
-            name="newTodo"
-            type="text"
-            inputmode="text"
-            placeholder="What do you need to do?"
-            maxlength="160"
-            required
-          />
-          <button class="button button-primary" type="submit">Add</button>
-        </form>
+      <main id="main" class="container">
+        <section class="card app" aria-label="To-do app">
+          <form id="addForm" class="add-row" autocomplete="off">
+            <label class="sr-only" for="newTodo">Add a task</label>
+            <input
+              id="newTodo"
+              name="newTodo"
+              type="text"
+              inputmode="text"
+              placeholder="What do you need to do?"
+              maxlength="160"
+              required
+            />
+            <select id="newPriority" aria-label="Priority">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <input
+              id="newDueDate"
+              type="date"
+              aria-label="Due date (optional)"
+            />
+            <button class="button button-primary" type="submit">Add</button>
+          </form>
 
-        <div class="toolbar" aria-label="Controls">
-          <div class="filters" role="group" aria-label="Filter tasks">
-            <button type="button" class="chip" data-filter="all" aria-pressed="true">
-              All
-            </button>
-            <button type="button" class="chip" data-filter="active" aria-pressed="false">
-              Active
-            </button>
-            <button
-              type="button"
-              class="chip"
-              data-filter="completed"
-              aria-pressed="false"
-            >
-              Completed
+          <label class="search-row">
+            <span class="sr-only">Search tasks</span>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search tasks…"
+              autocomplete="off"
+            />
+          </label>
+
+          <div
+            class="progress"
+            role="progressbar"
+            id="progressBar"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-label="Task completion progress"
+          >
+            <div id="progressFill" class="progress-fill"></div>
+            <span id="progressLabel" class="progress-label">0 of 0 completed</span>
+          </div>
+
+          <div class="toolbar" aria-label="Controls">
+            <div class="filters" role="group" aria-label="Filter tasks">
+              <button type="button" class="chip" data-filter="all" aria-pressed="true">
+                All
+              </button>
+              <button type="button" class="chip" data-filter="active" aria-pressed="false">
+                Active
+              </button>
+              <button
+                type="button"
+                class="chip"
+                data-filter="completed"
+                aria-pressed="false"
+              >
+                Completed
+              </button>
+            </div>
+
+            <div class="stats" aria-label="Task counts">
+              <span class="stat">
+                <span class="stat-label">Remaining</span>
+                <strong id="remainingCount">0</strong>
+              </span>
+              <span class="stat">
+                <span class="stat-label">Total</span>
+                <strong id="totalCount">0</strong>
+              </span>
+            </div>
+
+            <button id="clearCompleted" class="button button-ghost" type="button" disabled>
+              Clear completed
             </button>
           </div>
 
-          <div class="stats" aria-label="Task counts">
-            <span class="stat">
-              <span class="stat-label">Remaining</span>
-              <strong id="remainingCount">0</strong>
-            </span>
-            <span class="stat">
-              <span class="stat-label">Total</span>
-              <strong id="totalCount">0</strong>
-            </span>
+          <div class="list-scroll" id="listScroll">
+            <ul id="todoList" class="list" aria-label="Tasks"></ul>
+            <p id="emptyState" class="empty muted" hidden>
+              No tasks yet. Add one above to get started.
+            </p>
           </div>
+        </section>
+      </main>
 
-          <button id="clearCompleted" class="button button-ghost" type="button" disabled>
-            Clear completed
-          </button>
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <p class="muted">Built with HTML, CSS, and JavaScript — no frameworks.</p>
+          <a class="muted" href="#main">Back to top</a>
         </div>
-
-        <ul id="todoList" class="list" aria-label="Tasks"></ul>
-
-        <p id="emptyState" class="empty muted" hidden>
-          No tasks yet. Add one above to get started.
-        </p>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p class="muted">Built with HTML, CSS, and JavaScript — no frameworks.</p>
-        <a class="muted" href="#main">Back to top</a>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <script src="./app.js" defer></script>
   </body>
